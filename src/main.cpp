@@ -38,10 +38,10 @@ int main(void)
 {
 	InitWindow(WIDTH, HEIGHT, "raylib [core] example - basic window");
 	player_tex = LoadTexture("images/alien-donut-eater.png");
-	player_x = WIDTH/2-player_tex.width/2;
-	player_y = HEIGHT-player_tex.height-20;
 	player_tex.width /= 4;
 	player_tex.height /= 4;
+	player_x = WIDTH/2-player_tex.width/2;
+	player_y = HEIGHT-player_tex.height-20;
 
 	alien_invasion = LoadTexture("images/alien-invasion.png");
 	asteroid_crumbcake = LoadTexture("images/asteroid-crumbcake.png");
@@ -94,7 +94,7 @@ void UpdateDrawFrame()
 
 	for (int i = 0; i < donuts.size(); i++)
 	{
-		donuts[i].second.y -= 100 * GetFrameTime();
+		donuts[i].second.y += 100 * GetFrameTime();
 		if (CheckCollisionRecs(
 			{player_x, player_y, (float)player_tex.width, (float)player_tex.height},
 			{donuts[i].second.x, donuts[i].second.y, (float)donuts[i].first->width, (float)donuts[i].first->height}
@@ -106,6 +106,10 @@ void UpdateDrawFrame()
 
 		DrawTextureV(*donuts[i].first, donuts[i].second, WHITE);
 	}
+	if (IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT))
+		player_x -= 200 * GetFrameTime();
+	if (IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT))
+		player_x += 200 * GetFrameTime();
 
 	DrawTexture(player_tex, player_x, player_y, WHITE);
 
