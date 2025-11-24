@@ -87,7 +87,10 @@ void UpdateDrawFrame()
 			donut_selection[GetRandomValue(0, donut_selection.size())],
 			Vector2 {(float)GetRandomValue(0, WIDTH), -80}
 		));
+		donut_adding_timer = 0;
 	}
+
+	player_x = Clamp(player_x, 0, WIDTH-player_tex.width);
 	BeginDrawing();
 	
 	ClearBackground(DARKPURPLE);
@@ -107,13 +110,13 @@ void UpdateDrawFrame()
 		DrawTextureV(*donuts[i].first, donuts[i].second, WHITE);
 	}
 	if (IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT))
-		player_x -= 200 * GetFrameTime();
+		player_x -= 400 * GetFrameTime();
 	if (IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT))
-		player_x += 200 * GetFrameTime();
+		player_x += 400 * GetFrameTime();
 
 	DrawTexture(player_tex, player_x, player_y, WHITE);
 
-	std::string score_str = "Score: " + score;
+	std::string score_str = "Score: " + std::to_string(score);
 	DrawText(score_str.c_str(), 20, 20, 20, WHITE);
 	EndDrawing();
 }
